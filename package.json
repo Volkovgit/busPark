@@ -1,0 +1,23 @@
+{
+  "dependencies": {
+    "dotenv": "^16.0.1",
+    "pg": "^8.7.3"
+  },
+  "name": "buspark",
+  "description": "Сведения о каждом маршруте: номер, количество остановок, длина маршрута (в километрах), количество автобусов, необходимых для обеспечения движения по маршруту.",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node product/connect.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Volkovgit/busPark.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Volkovgit/busPark/issues"
+  },
+  "homepage": "https://github.com/Volkovgit/busPark#readme"
+}
