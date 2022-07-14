@@ -2,17 +2,16 @@ const { Pool, Client } = require('pg');
 require('dotenv').config();
 
 
-module.exports = class BdConnection {
+module.exports = class DBConnection {
     connection = {
-        user: process.env.BD_user,
-        host: process.env.BD_host,
-        database: process.env.BD_database,
-        password: process.env.BD_password,
-        port: Number(process.env.BD_port),
+        user: process.env.DB_user,
+        host: process.env.DB_host,
+        database: process.env.DB_database,
+        password: process.env.DB_password,
+        port: Number(process.env.DB_port),
     }
 
     constructor() {
-        
         this.pool = this._createPool(this.connection);
     }
 
@@ -20,9 +19,10 @@ module.exports = class BdConnection {
         return new Pool(dbSettings)
     }
 
-    async queryBd(sql) {
-        return await this.pool.query(sql).then((data,err) => {
+    async queryDB(sql) {
+        return await this.pool.query(sql).then((data, err) => {
             this.pool.end();
+            if(err) return err
             return data
         })
     }
