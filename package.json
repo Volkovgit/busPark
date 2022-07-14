@@ -1,14 +1,14 @@
 {
   "dependencies": {
+    "dotenv": "^16.0.1",
     "pg": "^8.7.3"
   },
   "name": "buspark",
   "description": "Сведения о каждом маршруте: номер, количество остановок, длина маршрута (в километрах), количество автобусов, необходимых для обеспечения движения по маршруту.",
   "version": "1.0.0",
   "main": "index.js",
-  "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node product/connect.js"
   },
   "repository": {
     "type": "git",
