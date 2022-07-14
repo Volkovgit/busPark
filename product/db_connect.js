@@ -2,7 +2,7 @@ const { Pool, Client } = require('pg');
 require('dotenv').config();
 
 
-class BdConnection {
+module.exports = class BdConnection {
     connection = {
         user: process.env.BD_user,
         host: process.env.BD_host,
@@ -27,14 +27,6 @@ class BdConnection {
         })
     }
 }
-
-
-testConnection = new BdConnection()
-
-
-testConnection.queryBd('SELECT * FROM public.routes;').then((data) => {
-    console.log(data.rows);
-})
 
 
 
