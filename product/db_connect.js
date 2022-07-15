@@ -3,6 +3,8 @@ require('dotenv').config();
 
 
 module.exports = class DBConnection {
+
+    // Правильно ли это?
     connection = {
         user: process.env.DB_user,
         host: process.env.DB_host,
