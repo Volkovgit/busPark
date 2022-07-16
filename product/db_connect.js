@@ -22,11 +22,13 @@ module.exports = class DBConnection {
     }
 
     async queryDB(sql) {
-        return await this.pool.query(sql).then((data, err) => {
-            this.pool.end();
-            if(err) return err
+        // await this.pool.end();
+        const answer = await this.pool.query(sql).then((data, err) => {
+            this.pool.end((err) => {}); // Не понял как решить по другому проблему закрытия пулов
+            if (err) return err
             return data
         })
+        return answer;
     }
 }
 

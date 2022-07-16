@@ -3,7 +3,6 @@ const DBConnection = require('./db_connect')
 
 
 class DbQuery {
-    SQL_SELECT_ROUTES = "SELECT * FROM public.routes";
     constructor() {
         this.DBConn = new DBConnection()
     }
@@ -14,7 +13,7 @@ class DbQuery {
         })
     }
 
-    _createSelect(obj = null,table) {
+    _createSelect(obj = null, table) {
         let sql = `SELECT * FROM ${table}`
         if (obj) {
             sql += " WHERE"
@@ -31,46 +30,55 @@ class DbQuery {
     }
 
 
-    _createInsert(obj,table) {
-        let sql = `INSERT INTO ${table} VALUES ()`
+    _createInsert(obj, table) {
+        let sql = `INSERT INTO ${table} `
         const dataLength = Object.keys(obj).length
         if (dataLength > 0) {
-            console.log(dataLength);
+            let data_type = '('
+            let value_elem = 'VALUES ('
             Object.keys(obj).forEach((elem, index) => {
-                if (index + 1 < dataLength) sql += ` ${this._normalizeElem(obj[elem])},`
-                else sql += ` ${elem} = ${this._normalizeElem(obj[elem])};`;
+                if (index + 1 < dataLength) {
+                    value_elem += `${this._normalizeElem(obj[elem])},`;
+                    data_type += `${elem},`
+                }
+                else {
+                    value_elem += `${this._normalizeElem(obj[elem])});`
+                    data_type += `${elem}) `
+                };
             })
+            sql += data_type + value_elem;
+            return sql
         }
         else {
             return new Error('Пустой объект') // Как адекватно обрабатывать и передавать ошибки?
         }
-        return sql
+
     }
 
-    _normalizeElem(el){
-        if(typeof(el) == 'number'){
+    _normalizeElem(el) {
+        if (typeof (el) == 'number') {
             return el
         }
-        else{
-            return new Error('Недопустимые данные в объекте') // Как адекватно обрабатывать и передавать ошибки?
+        else {
+            new Error('Недопустимые данные в объекте') // Как адекватно обрабатывать и передавать ошибки?
         }
     }
 
     getRoutes(obj = null) {
-        return this._getQuery(this._createSelect(obj,'public.routes'))
+        return this._getQuery(this._createSelect(obj, 'public.routes'))
     }
 
-    addRoutes(obj){
-        return this._createInsert({},"public.routes");
+    addRoutes(obj) {
+        return this._getQuery(this._createInsert(obj, "public.routes"));
     }
 
 
 }
 
-try{
+
 const testDbQuery = new DbQuery();
-testDbQuery.addRoutes()
-}
-catch(err){
-    console.log(err);
-}
+
+// testDbQuery.addRoutes({ stationcount: 3, long: 4 , buscount: 2});
+
+
+testDbQuery.getRoutes().then(data=>console.log(data))
